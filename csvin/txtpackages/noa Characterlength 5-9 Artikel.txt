@@ -1,0 +1,6 @@
+"Artikel"
+2
+true
+false
+5
+9

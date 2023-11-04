@@ -1,0 +1,6 @@
+Lagerbestand Bestellbestand
+3
+true
+true
+roundup
+

@@ -1,0 +1,7 @@
+Characterlength Filename
+ColumnHeadline
+2
+true
+true
+minimumlength
+maximumlength

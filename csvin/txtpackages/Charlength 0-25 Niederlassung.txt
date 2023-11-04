@@ -1,0 +1,6 @@
+Niederlassung
+2
+true
+true
+0
+25

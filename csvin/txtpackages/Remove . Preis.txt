@@ -1,0 +1,6 @@
+Preis
+0
+true
+false
+.
+

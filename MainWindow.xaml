@@ -1,0 +1,549 @@
+﻿<Window x:Class="csvCheck.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:csvCheck"
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}"
+        WindowStyle="None"
+        Title="csvCheck">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" />
+    </WindowChrome.WindowChrome>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Grid>
+                <Grid Margin="0" Height="30" Background="LightBlue" MouseLeftButtonUp="OnMouseLeftButtonUp" MouseMove="OnMouseMove" VerticalAlignment="Top" MouseLeftButtonDown="OnMouseLeftButtonDown">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="RoyalBlue" FontWeight="Bold" FontSize="15"/>
+
+                    <StackPanel  Orientation="Horizontal" Grid.Column="1">
+
+                        <Button Click="MinimizeWindow" Margin="10, 0, 10, 0" Width="30"  BorderThickness="0" Background="Transparent">
+                            <Button.Content>
+                                <Grid>
+                                    <Rectangle Width="17" Height="2" Fill="White"/>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Click="MaximizeWindow" Margin="10, 0, 8, 0" Width="30"  BorderThickness="0" Background="Transparent">
+                            <Button.Content>
+                                <Grid>
+                                    <Rectangle Width="15" Height="15" Stroke="White" StrokeThickness="2" Margin="0, 1, 0, 0"/>
+                                    <Rectangle Width="15" Height="15" Fill="LightBlue" Stroke="White" StrokeThickness="2" Margin="0, 9, 10, 0"/>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Click="CloseWindow" Margin="2, 0, 15, 0" Content="X" Foreground="White" FontSize="20" Width="30"  BorderThickness="0" Background="Transparent"/>
+                    </StackPanel>
+
+                </Grid>
+                <Grid Margin="0,30,0,0" Background="White" Grid.ColumnSpan="2">
+                    <ContentPresenter />
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+    </Window.Template>
+    <Window.Resources>
+        <Style x:Key="outPutText" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="CornflowerBlue"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--main 1-->
+        <Grid Grid.Column="0" Margin="0,0,100,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--sub 1-->
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Button Grid.Row="0" Content="CSV File Input" Click="SaveCsvButton_Click" AllowDrop="True" Drop="OnDrop" HorizontalAlignment="Stretch" Margin="40, 150, 40, 50" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Row="2" Content="CSV File Output" Click="SaveCsvButton1_Click" HorizontalAlignment="Stretch" Margin="40, 50, 40, 150" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+            <!--sub 2-->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Button Grid.Row="2" Content="CSV File Sortout" Click="SaveCsvButton2_Click" HorizontalAlignment="Stretch" Margin="40, 50, 40, 150" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Row="0" Content="Packages Manager"  Click="PackageManager_Click" HorizontalAlignment="Stretch" Margin="40, 150, 40, 50" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+ 
+        <!--main 2-->
+        <Grid Margin="-100,0,0,0" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Button Content="Leave as Sort Out"  Grid.Column="0"  Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 5, 25" Visibility="Collapsed">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="3.5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="! Add to Out Put" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="5, 10, 10, 25" Visibility="Collapsed">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="3.5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Slider x:Name="stateSlider" ValueChanged="stateSlider_ValueChanged" Grid.Column="2" Minimum="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Maximum="2" Value="1" TickFrequency="1" TickPlacement="BottomRight" Margin="10 0, 10, 49" IsSnapToTickEnabled="True" />
+
+                <Button Content="Animation Speed" Height="30" Grid.Column="2"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 0, 10, 75">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/>
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                
+                <Button Content="Disable false delimiters" x:Name="enablebutton" Height="45" Click="falsedel" Grid.Column="0"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0, 10, 0, 60">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="AliceBlue"/> 
+                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="BorderThickness" Value="3.5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <ContentPresenter.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15"/>
+                                                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="RoyalBlue"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </Grid>
+            <ScrollViewer Margin="0, 60, 10, 110" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2">
+
+                <TextBox Style="{StaticResource outPutText}" x:Name="outputTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
+                    BorderThickness="5" BorderBrush="LightBlue" Background="AliceBlue">
+                </TextBox>
+            </ScrollViewer>
+            <ScrollViewer Margin="10, 60, -2, 110" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+                <TextBox Style="{StaticResource outPutText}" x:Name="outputFalseText" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
+                    BorderThickness="5" BorderBrush="LightBlue" Background="AliceBlue">
+                </TextBox>
+            </ScrollViewer>
+            <Border Margin="0, 30, 10, 0" Grid.Column="2" VerticalAlignment="Top">
+                <Border>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="LightBlue" />
+                            <Setter Property="BorderThickness" Value="3" />
+                            <Setter Property="Background" Value="AliceBlue" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue" />
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" Value="AliceBlue" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="Foreground" Value="CornflowerBlue" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="RoyalBlue" />
+                                        <Setter Property="Background" Value="LightBlue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                         Console
+                    </TextBlock>
+                </Border>
+            </Border>
+
+            <Border Margin="10, 30, 0, 0" Grid.Column="0" VerticalAlignment="Top">
+                <Border>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="LightBlue" />
+                            <Setter Property="BorderThickness" Value="3" />
+                            <Setter Property="Background" Value="AliceBlue" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightBlue" />
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" Value="AliceBlue" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="Foreground" Value="CornflowerBlue" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="RoyalBlue" />
+                                        <Setter Property="Background" Value="LightBlue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        Sorted Out
+                    </TextBlock>
+                </Border>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>
