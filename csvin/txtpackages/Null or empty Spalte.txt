@@ -1,4 +1,0 @@
-Spalte
-4
-false
-true

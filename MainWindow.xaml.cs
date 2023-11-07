@@ -16,7 +16,8 @@ namespace csvCheck
     public partial class MainWindow : Window
     {
         
-        public string hauptPfad = Path.Combine(@"C:\Users\leon.haufe\source\repos\csvCheck", "csvin");
+        public string hauptPfad = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "csvin");
+        //leads to bin\debug\net7.0-windows\csvin\
         public string fileinputNameget = "";
         public bool autodelimiterkorrektur = false;
         public double writespeed = 0.5;

@@ -1,5 +1,0 @@
-Artikel
-5
-true
-true
-isalphanumeric

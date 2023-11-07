@@ -1,7 +1,0 @@
-Replace remove Filename
-ColumnHeadline
-0
-true
-true
-character to replace
-character to replace with

@@ -1,6 +1,0 @@
-Rounding Filename
-ColumnHeadline
-3
-true
-true
-round | roundup | rounddown

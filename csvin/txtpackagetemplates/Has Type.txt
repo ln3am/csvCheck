@@ -1,6 +1,0 @@
-Has type Filename
-ColumnHeadline
-5
-true
-true
-isint | isfloat | isalphanumeric

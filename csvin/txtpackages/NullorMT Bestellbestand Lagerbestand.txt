@@ -1,4 +1,0 @@
-Bestellbestand Lagerbestand
-4
-true
-true

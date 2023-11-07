@@ -1,6 +1,0 @@
-Starts like Filename
-ColumnHeadline
-1
-true
-true
-character/s that a column has to start with
